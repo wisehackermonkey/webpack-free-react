@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>This shouldn't be legal‽</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.1/underscore-min.js"
+        integrity="sha512-ZuOjyqq409+q6uc49UiBF3fTeyRyP8Qs0Jf/7FxH5LfhqBMzrR5cwbpDA4BgzSo884w6q/+oNdIeHenOqhISGw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/@material-ui/core@4.11.0/umd/material-ui.production.min.js"></script>
+
+</head>
+
+<body>
+    <div id="output"></div>
+    <!-- Load Babel -->
+<script>
+    var example = ` 
+<html>
+    <head>
+        <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"><\/script>
+        <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"><\/script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"><\/script>
+    <\/head>
+    <body>
+        <script type="text\/babel">
+            ReactDOM.render(
+                <h1> React working without bundlers!<\/h1>,
+                document.getElementById('root')
+            );
+        <\/script>
+        <div id="root"><\/div>
+    <\/body>
+<\/html>
+        `
+</script>
+    <script type="text/babel">
+ 
+        const useState = React.useState
+        const { Button, Box, Paper, Stack, Grid, Container, Typography, CssBaseline } = window['MaterialUI'];
+
+
+
+        const App = () => {
+            const [test, setTest] = useState(false)
+            const [showsource, setShowSource] = useState(false)
+            const [showsource2, setShowSource2] = useState(false)
+
+            
+            const answerText2 = (
+                <Paper>
+                    <h1></h1>
+                    <Button onClick={() => { setShowSource2(!showsource2) }}> {"Full example!"}</Button>
+                    {showsource ?
+                        <Paper>
+
+                            <div>{example.split("\n").map(x => {
+                                return <p>{x}<br /></p>
+
+                            })}
+                            </div>
+
+                        </Paper>
+                        : null}
+
+                </Paper>
+            )
+            const answerText = (
+                <Paper>
+                    <h1>WRONG!</h1>
+                    <Button onClick={() => { setShowSource(!showsource) }}> {"But wait how?"}</Button>
+                    {showsource ?
+                        <Paper>
+
+                            <div>{`
+            CDN import from cdn!
+            https://unpkg.com/@babel/standalone/babel.min.js
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.1/underscore-min.js"
+                `.split("\n").map(x => {
+                                return <p>{x}<br /></p>
+
+                            })}
+                            {answerText2}
+                               
+                            </div>
+
+                        </Paper>
+                        : null}
+
+                </Paper>
+            )
+
+
+            return (
+                <>
+                    <Container>
+                        <CssBaseline />
+
+                        <Typography  >
+
+
+                            <Grid sx={{
+                                mt: 32,
+                                mb: 16,
+                                display: 'flex',
+
+                            }} maxWidth="sm"
+
+                            >
+                                <Grid item xs >
+
+                                    <Paper width={500} height={500} sx={{
+                                        gap: 3,
+                                    }
+                                    }>
+                                        <h1 sx={{ textAlign: 'justify', m: 1 }}>So they say React.js Requires a bundler? right?</h1>
+                                        <hr />
+                                        <Button onClick={() => { setTest(!test) }}
+                                        >Click here for the answer!</Button>
+                                        <hr />
+                                        {
+                                            test ? answerText : null
+                                        }
+                                    </Paper>
+                                </Grid>
+
+                            </Grid>
+                        </Typography>
+                    </Container>
+                </>
+            )
+        }
+
+        ReactDOM.render(
+            <App />,
+            document.getElementById('root')
+        );
+
+
+    </script>
+
+    <div id="root"></div>
+</body>
+
+</html>
